@@ -1,0 +1,23 @@
+{
+  "name": "revieve-interview",
+  "version": "1.0.0",
+  "description": "Assignment proposed by Revieve",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiond/Revieve-interview.git"
+  },
+  "author": "Sergio Nunez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergiond/Revieve-interview/issues"
+  },
+  "homepage": "https://github.com/sergiond/Revieve-interview#readme",
+  "dependencies": {
+    "csv": "^6.0.5",
+    "lodash": "^4.17.21"
+  }
+}
