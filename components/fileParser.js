@@ -62,7 +62,6 @@ async function Trasks() {
     
     // TASK 1
 
-    // Pasamor un indentificador, recorremos los productos buscándolo y devolvemos el precio unitario
     const productPrice = (identifier) => { 
         let total = 0;
        resultProducts.map((price, index) => {
@@ -73,7 +72,6 @@ async function Trasks() {
     }
 
 
-    // Recorremor Ordenes y las obtenemos por separado devolviendo el total de la venta
     const totalOrderPrice = () => { 
         const totalValue = resultsOrders.map(orderNumber => {
            let value = 0
