@@ -3,8 +3,8 @@ const { parse } = require("csv-parse")
 const { stringify } = require("csv-stringify")
 const _ = require('lodash')
 
-async function Trasks() {
-    
+async function Assignment() {
+
     const promiseOrders = () => new Promise((resolve, reject) => {
         const resultsOrders = [];
 
@@ -23,7 +23,7 @@ async function Trasks() {
             });
 
     });
-    
+
     const readCSV = (route) => new Promise((resolve, reject) => {
         const resultsProducts = [];
 
@@ -41,38 +41,38 @@ async function Trasks() {
     });
 
     const writeToCsv = (values, filepath, columns) => {
-       
+
         const writableStream = fs.createWriteStream(filepath)
-            
+
         const stringifier = stringify({ header: true, columns: columns })
-        
-       
+
+
         for (const [key, value] of Object.entries(values)) {
             stringifier.write({ [columns[0]]: key, [columns[1]]: value })
         }
 
         stringifier.pipe(writableStream);
         console.log("Finished writing data")
-        
+
     }
 
     const writeToCsvMarketing = (values, filepath, columns) => {
-       
+
         const writableStream = fs.createWriteStream(filepath)
-            
+
         const stringifier = stringify({ header: true, columns: columns })
-        
-       
+
+
         for (const [key, value] of Object.entries(values)) {
             stringifier.write({ [columns[0]]: value.id, [columns[1]]: value.firstname, [columns[2]]: value.lastname, [columns[3]]: value.total_euros })
         }
 
         stringifier.pipe(writableStream);
         console.log("Finished writing data")
-        
+
     }
 
-    
+
     const resultsOrders = await promiseOrders()
     const resultProducts = await readCSV("../master-files/products.csv")
     const resultCustomers = await readCSV("../master-files/customers.csv")
@@ -96,20 +96,20 @@ async function Trasks() {
                 orderNumber.slice(2).map(result => {
                     value += productPrice(result)
                 })
-            
+
                 let sumOrder = value
                 value = 0
                 return sumOrder
             })
             return totalValue
         }
-    
+
         console.log('Writing data Task 1')
         const valueOrder = totalOrderPrice()
         const filepathOrders = "../result-files/order_prices.csv";
         const columnsOrders = ["id", "euros"];
         writeToCsv(valueOrder, filepathOrders, columnsOrders)
-        
+
         return valueOrder
 
     }
@@ -124,9 +124,9 @@ async function Trasks() {
                 buyerid.slice(2).map(result => {
                     res.push({ id: result, customer_ids: buyerid[1] })
                 })
-            
+
             });
-                
+
             const productByCostumber = _.uniqWith(res, _.isEqual)
 
             let response = [];
@@ -142,43 +142,43 @@ async function Trasks() {
         const columnsBuyerOrders = ["id", "customer_ids"];
         writeToCsv(buyerOrder, filepathBuyerOrders, columnsBuyerOrders)
     }
-    
+
 
     // TRASK 3
-    
-    const thirdTrask = (valueOrder) => {
-        const totalEuros = () =>{
-    const res = [];
-    valueORderResponse = valueOrder.map(customerorder => {
-        return customerorder
-    })
-    resultsOrders.map((buyerid, index) => {
-        buyerid.slice(1, 2).map(result => {
-            res.push({ id: result, customer_order: valueORderResponse[index] })
-        })
-    })
-    
 
-    const response = res.reduce((res, b) =>
-        res.set(b.id, (res.get(b.id) || 0) + Number(b.customer_order)), new Map);
+    const thirdTrask = () => {
+        const totalEuros = () => {
+            const res = [];
+            valueORderResponse = valueOrder.map(customerorder => {
+                return customerorder
+            })
+            resultsOrders.map((buyerid, index) => {
+                buyerid.slice(1, 2).map(result => {
+                    res.push({ id: result, customer_order: valueORderResponse[index] })
+                })
+            })
 
 
-    toObject = (map) => {
-        let obj = Object.create(null);
-        let i = 1;
-        for (let [key, value] of map.entries()) {
+            const response = res.reduce((res, b) =>
+                res.set(b.id, (res.get(b.id) || 0) + Number(b.customer_order)), new Map);
 
-            obj[key] = value;
 
-        }
-        return obj;
-    }
-    
-    const totalOrderPrice = toObject(response)
-    const totalOrderPriceObj = resultCustomers.map((totalEur, index) => {
-         return {id: totalEur[0], firstname : totalEur[1], lastname: totalEur[2], total_euros: totalOrderPrice[index] || 0  }
-     })
-    
+            toObject = (map) => {
+                let obj = Object.create(null);
+                let i = 1;
+                for (let [key, value] of map.entries()) {
+
+                    obj[key] = value;
+
+                }
+                return obj;
+            }
+
+            const totalOrderPrice = toObject(response)
+            const totalOrderPriceObj = resultCustomers.map((totalEur, index) => {
+                return { id: totalEur[0], firstname: totalEur[1], lastname: totalEur[2], total_euros: totalOrderPrice[index] || 0 }
+            })
+
             return _.orderBy(totalOrderPriceObj, ['total_euros'], ['desc'])
         }
 
@@ -193,9 +193,9 @@ async function Trasks() {
 
     const valueOrder = firstTrask()
     secondTrask(resultsOrders)
-    thirdTrask(valueOrder)
+    thirdTrask()
 }
 
+Assignment()
 
-Trasks()
 
